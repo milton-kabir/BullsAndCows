@@ -66,7 +66,6 @@ public class Main {
             else{
                 System.out.println("Grade: "+b+" bull(s) and "+c+" cow(s).");
             }
-
         }
 
     }
