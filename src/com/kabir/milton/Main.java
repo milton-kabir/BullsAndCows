@@ -5,12 +5,31 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         System.out.println("Input the length of the secret code:");
         Scanner sc = new Scanner(System.in);
-        String tt=sc.nextLine();
-        int sz = Integer.parseInt(tt);
-        if(sz>36){
+        String[] strArr = sc.nextLine().split(" ");
+        if(strArr.length>1||!isNumeric(strArr[0])){
+            String sss=strArr[0];
+            for(int i=1;i<strArr.length;i++){
+                sss+=" "+strArr[i];
+            }
+            System.out.println("Error: \""+sss+"\" isn't a valid number.");
+            return;
+        }
+        int sz = Integer.parseInt(strArr[0]);
+        if(sz>36||sz==0){
             System.out.println("Error: can't generate a secret number with a length of "+sz+" because there aren't enough unique digits.");
             return;
         }
@@ -23,13 +42,33 @@ public class Main {
             ar[i] = temp;
         }
         String st="";
-        for(int i=0;i<sz;i++){
+        int mn=Math.min(sz,10);
+        for(int i=0;i<mn;i++){
             st+=ar[i];
         }
+
 //        System.out.println(st);
         System.out.println("Input the number of possible symbols in the code:");
-        tt=sc.nextLine();
-        int sz1 = Integer.parseInt(tt);
+        strArr = sc.nextLine().split(" ");
+        if(strArr.length>1||!isNumeric(strArr[0])){
+            String sss=strArr[0];
+            for(int i=1;i<strArr.length;i++){
+                sss+=" "+strArr[i];
+            }
+            System.out.println("Error: \""+sss+"\" isn't a valid number.");
+            return;
+        }
+        int sz1 = Integer.parseInt(strArr[0]);
+        if(sz1>36){
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).\n");
+            return;
+        }
+        if(sz1<sz){
+            System.out.println("Error: it's not possible to generate a code with a length of "+sz+" with "+sz1+" unique symbols.");
+            return;
+        }
+
+
         if(sz1>36){
             System.out.println("Error: can't generate a secret number with a length of "+sz+" because there aren't enough unique digits.");
             return;
